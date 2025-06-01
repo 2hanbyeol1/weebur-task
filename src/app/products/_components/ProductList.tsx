@@ -3,15 +3,16 @@ import { useEffect, useState } from "react";
 
 import { getProducts } from "@/apis/product";
 import InfiniteScrollList from "@/components/InfiniteScrollList";
-import ProductItem from "@/components/ProductItem";
 import { ELayout } from "@/types/mode";
 import { ProductType } from "@/types/product";
 
 import { setLayoutCookie } from "../action";
 
+import ProductItem from "./ProductItem";
+
 const LAYOUT_CN = {
-  [ELayout.LIST]: "grid grid-cols-1 gap-2",
-  [ELayout.GRID]: "grid grid-cols-4 gap-8",
+  [ELayout.LIST]: "grid grid-cols-1 gap-4",
+  [ELayout.GRID]: "grid grid-cols-4 gap-x-8 gap-y-16",
 };
 
 interface ProductListProps {
