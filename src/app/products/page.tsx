@@ -8,7 +8,7 @@ const ProductListPage = async () => {
   const viewMode = await getLayoutCookie();
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-10">
       <Button href={CREATE_PRODUCT_PATH} size="sm" className="self-end">
         추가하기
       </Button>

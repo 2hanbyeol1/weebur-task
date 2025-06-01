@@ -36,11 +36,11 @@ const ProductList = ({ defaultLayoutMode }: ProductListProps) => {
       render={(product) => (
         <ProductItem key={product.id} product={product} layout={layoutMode} />
       )}
-      fetchFn={async () => {
+      fetchFn={async (page: number) => {
         const {
-          data: { products },
-        } = await getProducts({ limit: 20, skip: 0 });
-        return products;
+          data: { products, skip, total },
+        } = await getProducts({ limit: 20, skip: page * 20 });
+        return { newData: products, isLastPage: skip + 20 >= total };
       }}
     />
   );

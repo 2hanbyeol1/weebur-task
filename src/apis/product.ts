@@ -1,3 +1,4 @@
+import { OffsetPaginationMetaType } from "@/types/pagination";
 import { ProductType } from "@/types/product";
 
 import api from "./api";
@@ -7,7 +8,7 @@ interface GetProductsParams {
   skip: number;
 }
 
-interface GetProductsResponse {
+interface GetProductsResponse extends OffsetPaginationMetaType {
   products: ProductType[];
 }
 

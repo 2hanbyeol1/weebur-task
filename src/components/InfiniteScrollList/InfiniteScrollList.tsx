@@ -2,9 +2,11 @@
 
 import { ComponentProps, ReactNode, useEffect, useState } from "react";
 
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
+
 interface InfiniteScrollListProps<T> extends ComponentProps<"div"> {
   render: (data: T) => ReactNode;
-  fetchFn: () => Promise<T[]>;
+  fetchFn: (page: number) => Promise<{ newData: T[]; isLastPage: boolean }>;
 }
 
 const InfiniteScrollList = <T,>({
@@ -12,16 +14,41 @@ const InfiniteScrollList = <T,>({
   render,
   fetchFn,
 }: InfiniteScrollListProps<T>) => {
+  const [page, setPage] = useState<number>(0);
   const [data, setData] = useState<T[]>([]);
+  const [isLoading, setLoading] = useState(true);
+  const [isLastPage, setLastPage] = useState(false);
 
   useEffect(() => {
-    (async function () {
-      const newData = await fetchFn();
+    (async () => {
+      setLoading(true);
+      const { newData, isLastPage } = await fetchFn(page);
       setData((prev) => [...prev, ...newData]);
+      setLastPage(isLastPage);
+      setLoading(false);
     })();
-  }, [fetchFn]);
+  }, [fetchFn, page]);
 
-  return <div className={className}>{data.map((item) => render(item))}</div>;
+  const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
+    if (isIntersecting) setPage((prev) => prev + 1);
+  };
+
+  const { setTarget } = useIntersectionObserver({
+    onIntersect,
+    rootMargin: "1000px",
+  });
+
+  return (
+    <>
+      <div className={className}>{data.map((item) => render(item))}</div>
+      {!isLastPage &&
+        (isLoading ? (
+          <div className="bg-primary/80 mx-auto my-10 h-2 w-2 animate-ping rounded-full"></div>
+        ) : (
+          <div ref={setTarget}></div>
+        ))}
+    </>
+  );
 };
 
 export default InfiniteScrollList;

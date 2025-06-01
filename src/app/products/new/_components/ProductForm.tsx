@@ -38,7 +38,7 @@ const ProductForm = () => {
       await createProduct({ data });
       router.push(PRODUCT_LIST_PATH);
     } catch (e) {
-      console.error(e);
+      throw e;
     }
   };
 
