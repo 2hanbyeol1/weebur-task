@@ -1,8 +1,8 @@
-import clsx from "clsx";
 import Image from "next/image";
 
 import { ELayout } from "@/types/mode";
 import { ProductType } from "@/types/product";
+import { cn } from "@/util/util";
 
 interface ProductItemProps {
   product: ProductType;
@@ -12,11 +12,6 @@ interface ProductItemProps {
 const CONTAINER_CN = {
   [ELayout.LIST]: "flex-row gap-4",
   [ELayout.GRID]: "flex-col gap-1",
-};
-
-const IMAGE_CONTAINER_CN = {
-  [ELayout.LIST]: "aspect-square",
-  [ELayout.GRID]: "aspect-video",
 };
 
 const ITEM_INFO_CN = {
@@ -29,8 +24,8 @@ const ProductItem = ({
   layout,
 }: ProductItemProps) => {
   return (
-    <div className={clsx("flex", CONTAINER_CN[layout])}>
-      <div className={clsx("relative h-36", IMAGE_CONTAINER_CN[layout])}>
+    <div className={cn("flex", CONTAINER_CN[layout])}>
+      <div className="relative aspect-square">
         <Image
           src={thumbnail}
           alt={title}
@@ -40,7 +35,7 @@ const ProductItem = ({
         />
       </div>
       <div
-        className={clsx("flex flex-col justify-between", ITEM_INFO_CN[layout])}
+        className={cn("flex flex-col justify-between", ITEM_INFO_CN[layout])}
       >
         <div>
           <h6 className="mb-1.5 line-clamp-2 font-semibold">{title}</h6>

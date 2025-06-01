@@ -16,3 +16,12 @@ export function getProducts({ limit, skip }: GetProductsParams) {
     params: { limit, skip },
   });
 }
+
+type AddProductRequestBody = Pick<
+  ProductType,
+  "title" | "description" | "price" | "discountPercentage" | "brand"
+>;
+
+export function createProduct({ data }: { data: AddProductRequestBody }) {
+  return api.post("/products/add", data);
+}

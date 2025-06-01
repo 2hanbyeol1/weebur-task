@@ -17,6 +17,7 @@ pnpm dev
 ## 기술 스택
 
 `next.js` `typescript` `tailwind css`
+`react-hook-form` `zod`
 
 <br/>
 
@@ -29,32 +30,32 @@ pnpm dev
     - [x] 보기 방식 구현 - 리스트형 (List) + 그리드형 (Grid)
     - [x] 페이지 최초 진입 시 50% 확률로 랜덤 View 방식 → 24시간 이후 재접속 시 다시 랜덤 View 방식
     - [x] 리스트 상단에 상품 생성 페이지(/products/new)로 이동하는 버튼
-- [ ] 상품 생성 페이지 (/products/new)
-  - [ ] API 연결
-  - [ ] UI
-    - [ ] form
-    - [ ] 유효성 검사
-      - [ ] title
-        - [ ] text
-        - [ ] required
-        - [ ] 15자 이내
-      - [ ] description
-        - [ ] textarea
-        - [ ] optional
-      - [ ] price
-        - [ ] number
-        - [ ] required
-        - [ ] 1000원 이상
-      - [ ] discountPercentage
-        - [ ] number
-        - [ ] optional
-        - [ ] 100이내
-      - [ ] brand
-        - [ ] select
-        - [ ] required
-        - [ ] Apple | Samsung | Weebur 중 한 개 선택
-    - [ ] price 에서 discountPercentage 로 계산된 결과물(최종가격)이 실시간으로 디스플레이
-    - [ ] 생성 완료 시 상품 리스트 페이지(/products)로 이동
+- [x] 상품 생성 페이지 (/products/new)
+  - [x] API 연결
+  - [x] UI
+    - [x] form
+    - [x] 유효성 검사
+      - [x] title
+        - [x] text
+        - [x] required
+        - [x] 15자 이내
+      - [x] description
+        - [x] textarea
+        - [x] optional
+      - [x] price
+        - [x] number
+        - [x] required
+        - [x] 1000원 이상
+      - [x] discountPercentage
+        - [x] number
+        - [x] optional
+        - [x] 100 이내
+      - [x] brand
+        - [x] select
+        - [x] required
+        - [x] Apple | Samsung | Weebur 중 한 개 선택
+    - [x] price 에서 discountPercentage 로 계산된 결과물(최종가격)이 실시간으로 디스플레이
+    - [x] 생성 완료 시 상품 리스트 페이지(/products)로 이동
 
 <br/>
 
@@ -63,11 +64,13 @@ pnpm dev
   - [ ] UI
     - [ ] 무한 스크롤
     - [x] title 2줄 / description 3줄 이후 ...
+    - [ ] 익셉션 처리
+    - [ ] 테스트 코드
 
 ## 개발 계획
 
 - [x] 초기 설정(eslint, prettier)
-- [ ] MVP 기능 구현
+- [x] MVP 기능 구현
 - [ ] UI, 컴포넌트 디자인 및 설계
 - [ ] 퍼블리싱
 - [ ] 추가 구현 사항 구현
@@ -120,9 +123,6 @@ pnpm dev
     ```
 
     server action을 SSR에서 사용하는 방식이 문제가 되는 것이라고 생각해서 route handler로도 구현해봤습니다. 오류는 나지 않았지만, 역시 Client 측에서만 제대로 작동했고 Cookie는 저장되지 않았습니다.
-
-    오류는 나지 않았지만, 역시 Client 측에서만 제대로 작동했고 Cookie는 저장되지 않았습니다.
-
     → 구글링을 계속 해보니, Server Component에서는 Next의 cookies로 set을 할 수 없다는 결론에 도달하게 되었습니다.
 
     그래서 처음 계획대로, 다음과 같은 방식을 사용하게 되었습니다:
@@ -135,6 +135,13 @@ pnpm dev
     그런데 막상 구현해 보니, 어차피 products가 렌더링되기 전까지는 layout이 화면에 보이지 않고,
     products fetch 속도가 더 빨라서... 그냥 CSR로 구현해도 큰 차이가 없었겠다는 생각이 들었습니다.
     조금 허무했지만, 혹시 모를 상황을 대비해 현재 구조로 유지하기로 했습니다. 🥲
+
+- SelectBox와 react-hook-form
+  select > option은 자유로운 스타일 변경이 어렵습니다. 그래서 select, option 대신 button과 ul/li로 대체하여 커스텀 SelectBox 컴포넌트를 만들었습니다. 그런데, select 태그를 사용하지 않으니 register를 할 요소가 없어져서 hook-form을 연결하지 못하는 문제가 발생했습니다.
+
+  구글링을 했을 때 가장 보편적인 방법은 Controller를 사용하는 것이었습니다. 하지만 이렇게 구현하면 SelectBox를 사용할 때마다 Controller로 감싸줘야 하고 다른 input들과 사용 방법에 차이가 생겨 개발 편의성이 떨어진다고 생각했습니다.
+
+  → 자유로운 스타일링과 통일성(register 사용)을 모두 놓치고 싶지 않아서 여러가지 방법을 생각하던 중 ul/li 대신 label과 radio를 사용하면 어떨까하는 아이디어가 떠올랐고, 이를 사용하여 해결했습니다.
 
 <br/>
 

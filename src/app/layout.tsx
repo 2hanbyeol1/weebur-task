@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="ko" className={`${pretendard.variable}`}>
       <body className="font-pretendard">
         <Header />
-        <main className="mx-auto mt-16 w-full max-w-[1200px] px-2">
+        <main className="mx-auto mt-16 w-full max-w-[1200px] px-2 pb-8">
           {children}
         </main>
       </body>

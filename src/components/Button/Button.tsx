@@ -1,22 +1,43 @@
 import { ComponentProps } from "react";
-import clsx from "clsx";
 import Link from "next/link";
 
-type ButtonProps = ComponentProps<"button"> | ComponentProps<typeof Link>;
+import { cn } from "@/util/util";
+
+interface ButtonProps {
+  size?: "sm" | "md";
+}
 
 const BUTTON_CN =
-  "px-4 py-1.5 bg-primary text-white flex items-center justify-center rounded-md";
+  "bg-primary/80 text-white flex items-center justify-center rounded-md";
 
-function Button({ className, children, ...props }: ButtonProps) {
+const BUTTON_SIZE = {
+  sm: "px-3.5 py-1.5 text-sm",
+  md: "px-4 py-2 text-base",
+};
+
+function Button({
+  className,
+  size = "md",
+  children,
+  ...props
+}: ButtonProps & (ComponentProps<"button"> | ComponentProps<typeof Link>)) {
   if ("href" in props)
     return (
-      <Link className={clsx(BUTTON_CN, className)} {...props}>
+      <Link className={cn(BUTTON_CN, BUTTON_SIZE[size], className)} {...props}>
         {children}
       </Link>
     );
 
   return (
-    <button className={BUTTON_CN} {...props}>
+    <button
+      className={cn(
+        BUTTON_CN,
+        BUTTON_SIZE[size],
+        props.disabled ? "bg-primary/40 cursor-not-allowed" : "cursor-pointer",
+        className,
+      )}
+      {...props}
+    >
       {children}
     </button>
   );

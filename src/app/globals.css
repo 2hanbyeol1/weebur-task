@@ -7,3 +7,11 @@
   --breakpoint-tablet: 768px;
   --breakpoint-laptop: 1281px;
 }
+
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
