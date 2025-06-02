@@ -41,6 +41,7 @@ const SelectBox = ({
     <InputContainer title={title} error={error}>
       <div ref={ref} className="relative">
         <button
+          id={title}
           type="button"
           className={cn(
             "focus:ring-primary/70 hover:ring-primary/30 w-full cursor-pointer rounded-md px-4 py-3 text-start ring-1 ring-gray-300/50 duration-200 outline-none hover:ring-2 focus:ring-2",
@@ -56,7 +57,6 @@ const SelectBox = ({
               <label
                 key={`select-${option}`}
                 className="cursor-pointer rounded-md px-4 py-3 hover:bg-gray-50"
-                onClick={() => handleSelect(option)}
               >
                 {option}
                 <input
@@ -64,6 +64,7 @@ const SelectBox = ({
                   className="hidden"
                   value={option}
                   {...props}
+                  onClick={() => handleSelect(option)}
                 />
               </label>
             ))}

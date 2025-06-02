@@ -16,9 +16,11 @@ const InputContainer = ({
 }: InputContainerProps) => {
   return (
     <div className="flex flex-col gap-1">
-      <label className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-1.5">
         <div className="relative self-start">
-          <span className="text-sm text-gray-700">{title}</span>
+          <label htmlFor={title} className="text-sm text-gray-700">
+            {title}
+          </label>
           {required && (
             <div className="absolute top-0.5 -right-2 text-xs text-red-600">
               *
@@ -26,7 +28,7 @@ const InputContainer = ({
           )}
         </div>
         {children}
-      </label>
+      </div>
       <div className="text-primary/70 h-5 pl-1 text-sm">{error?.message}</div>
     </div>
   );
