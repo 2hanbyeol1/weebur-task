@@ -17,7 +17,8 @@ pnpm dev
 ## 기술 스택
 
 `next.js` `typescript` `tailwind css`
-`react-hook-form` `zod`
+`react hook form` `zod`
+`jest` `react testing library`
 
 <br/>
 
@@ -106,7 +107,6 @@ pnpm dev
     "use server";
 
     import { cookies } from "next/headers";
-    import { ELayout, isELayout } from "@/types/layout";
 
     // 기존에 저장된 값이 있다면 -> 저장값을 리턴
     // 없다면 -> 새로 생성된 값을 저장하고 리턴
@@ -153,4 +153,5 @@ pnpm dev
 | fix      | 버그 수정     |
 | style    | 스타일 수정   |
 | refactor | 코드 리팩토링 |
+| test     | 테스트 코드 추가   |
 | docs     | README 수정   |

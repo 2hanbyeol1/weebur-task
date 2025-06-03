@@ -76,7 +76,7 @@ const ProductForm = () => {
           title="가격"
           type="number"
           unit="원"
-          min={1000}
+          // min={1000}
           placeholder="0"
           required
         />
@@ -86,7 +86,7 @@ const ProductForm = () => {
           title="할인율"
           type="number"
           unit="%"
-          min={0}
+          // min={0}
           placeholder="0"
         />
       </div>

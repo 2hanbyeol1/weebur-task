@@ -1,8 +1,7 @@
 "use server";
 import { cookies } from "next/headers";
 
-import { isELayout } from "@/types/mode";
-import { getRandomLayout } from "@/util/util";
+import { getRandomLayout, isELayout } from "@/util/util";
 
 const cookieName = "layout_mode";
 
