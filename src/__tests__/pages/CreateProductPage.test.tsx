@@ -18,7 +18,7 @@ describe("ProductForm", () => {
     render(<ProductForm />);
     expect(screen.getByLabelText("상품명")).toHaveValue("");
     expect(screen.getByLabelText("상품 설명")).toHaveValue("");
-    expect(screen.getByLabelText("가격")).toHaveValue(1000);
+    expect(screen.getByLabelText("가격")).toHaveValue(null);
     expect(screen.getByLabelText("브랜드")).toHaveTextContent("Apple");
     expect(screen.getByRole("button", { name: "제출하기" })).toBeEnabled();
   });
@@ -35,13 +35,11 @@ describe("ProductForm", () => {
     expect(screen.getByRole("button", { name: "제출하기" })).toBeDisabled();
   });
 
-  it("상품명이 16자 이상 입력해도 15자까지만 입력된다.", async () => {
+  it("상품명을 16자 이상 입력해도 15자까지만 입력된다.", async () => {
     render(<ProductForm />);
     const titleInput = screen.getByLabelText("상품명") as HTMLInputElement;
-    const submitButton = screen.getByRole("button", { name: "제출하기" });
 
     await userEvent.type(titleInput, "가나다라마바사아자차카타파하1234567890");
-    await userEvent.click(submitButton);
 
     expect(titleInput.value.length).toBe(15);
   });

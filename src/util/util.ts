@@ -1,3 +1,10 @@
+import {
+  FieldErrors,
+  FieldValues,
+  Path,
+  UseFormRegister,
+  UseFormTrigger,
+} from "react-hook-form";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -18,4 +25,24 @@ export function getRandomLayout() {
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+export function registerWith<T extends FieldValues>({
+  name,
+  register,
+  trigger,
+  errors,
+}: {
+  name: Path<T>;
+  register: UseFormRegister<T>;
+  trigger: UseFormTrigger<T>;
+  errors: FieldErrors<T>;
+}) {
+  return {
+    ...register(name, {
+      onBlur: () => trigger(name),
+      onChange: () => trigger(name),
+    }),
+    error: errors[name],
+  };
 }
