@@ -1,8 +1,8 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/navigation";
 
-import ProductForm from "@/app/products/new/_components/ProductForm";
+import ProductForm from "@/app/(providers)/products/new/_components/ProductForm";
 import { PRODUCT_LIST_PATH } from "@/constants/path";
 
 jest.mock("next/navigation", () => ({
@@ -31,10 +31,8 @@ describe("ProductForm", () => {
     await userEvent.clear(titleInput);
     await userEvent.click(submitButton);
 
-    await waitFor(() => {
-      expect(screen.getByText("상품명을 입력해 주세요")).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: "제출하기" })).toBeDisabled();
-    });
+    expect(screen.getByText("상품명을 입력해 주세요")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "제출하기" })).toBeDisabled();
   });
 
   it("상품명이 16자 이상 입력해도 15자까지만 입력된다.", async () => {
@@ -45,9 +43,7 @@ describe("ProductForm", () => {
     await userEvent.type(titleInput, "가나다라마바사아자차카타파하1234567890");
     await userEvent.click(submitButton);
 
-    await waitFor(() => {
-      expect(titleInput.value.length).toBe(15);
-    });
+    expect(titleInput.value.length).toBe(15);
   });
 
   it("가격의 값이 공백이거나 1000보다 작을 때 폼을 제출하면, 메시지가 뜨고 제출 버튼이 비활성화된다.", async () => {
@@ -58,22 +54,14 @@ describe("ProductForm", () => {
     await userEvent.clear(priceInput);
     await userEvent.click(submitButton);
 
-    await waitFor(() => {
-      expect(
-        screen.getByText("1000원부터 입력할 수 있어요"),
-      ).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: "제출하기" })).toBeDisabled();
-    });
+    expect(screen.getByText("1000원부터 입력할 수 있어요")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "제출하기" })).toBeDisabled();
 
     await userEvent.type(priceInput, "500");
     await userEvent.click(submitButton);
 
-    await waitFor(() => {
-      expect(
-        screen.getByText("1000원부터 입력할 수 있어요"),
-      ).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: "제출하기" })).toBeDisabled();
-    });
+    expect(screen.getByText("1000원부터 입력할 수 있어요")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "제출하기" })).toBeDisabled();
   });
 
   it("할인율이 0보다 작거나 100보다 클 때 폼을 제출하면, 메시지가 뜨고 제출 버튼이 비활성화된다.", async () => {
@@ -83,19 +71,13 @@ describe("ProductForm", () => {
     await userEvent.type(discountInput, "-1");
     await userEvent.click(submitButton);
 
-    await waitFor(() => {
-      expect(screen.getByText("0%부터 입력할 수 있어요")).toBeInTheDocument();
-    });
+    expect(screen.getByText("0%부터 입력할 수 있어요")).toBeInTheDocument();
 
     await userEvent.clear(discountInput);
     await userEvent.type(discountInput, "101");
     await userEvent.click(submitButton);
 
-    await waitFor(() => {
-      expect(
-        screen.getByText("100%까지만 입력할 수 있어요"),
-      ).toBeInTheDocument();
-    });
+    expect(screen.getByText("100%까지만 입력할 수 있어요")).toBeInTheDocument();
   });
 
   it("가격에서 할인율로 계산된 최종 가격이 실시간으로 렌더링된다.", async () => {
@@ -114,12 +96,11 @@ describe("ProductForm", () => {
     (useRouter as jest.Mock).mockImplementation(() => ({ push }));
 
     render(<ProductForm />);
+
     await userEvent.type(screen.getByLabelText("상품명"), "제품");
     await userEvent.type(screen.getByLabelText("가격"), "1000");
     await userEvent.click(screen.getByRole("button", { name: "제출하기" }));
 
-    await waitFor(() => {
-      expect(push).toHaveBeenCalledWith(PRODUCT_LIST_PATH);
-    });
+    expect(push).toHaveBeenCalledWith(PRODUCT_LIST_PATH);
   });
 });

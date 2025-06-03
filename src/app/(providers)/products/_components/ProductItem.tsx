@@ -22,19 +22,31 @@ const ProductItem = ({
   const EXCHANGE_RATE = 1380.44;
 
   return (
-    <div className={cn("flex p-4", CONTAINER_CN[layout])}>
-      <div className="relative aspect-square">
+    <div
+      className={cn(
+        "group/product-item flex cursor-pointer p-4",
+        CONTAINER_CN[layout],
+      )}
+    >
+      <div
+        className={cn(
+          "relative aspect-square shrink-0",
+          layout === ELayout.LIST && "w-38",
+        )}
+      >
         <Image
           src={thumbnail}
           alt={title}
           fill
-          className="object-contain"
-          sizes="144px"
+          className="object-contain duration-200 group-hover/product-item:scale-110"
+          sizes="180px"
         />
       </div>
-      <div className="flex h-full flex-col justify-between gap-6">
+      <div className="flex flex-col justify-between gap-6">
         <div className="flex flex-col gap-1">
-          <h6 className="line-clamp-2 font-medium">{title}</h6>
+          <h6 className="group-hover/product-item:text-primary line-clamp-2 font-medium">
+            {title}
+          </h6>
           <p className="line-clamp-3 text-sm text-gray-500">{description}</p>
         </div>
         <div className="flex flex-col gap-1.5 text-sm">

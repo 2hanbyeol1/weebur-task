@@ -16,7 +16,7 @@ const LAYOUT_CN = {
 };
 
 interface ProductListProps {
-  defaultLayoutMode: ELayout | undefined;
+  defaultLayoutMode?: ELayout;
 }
 
 const ProductList = ({ defaultLayoutMode }: ProductListProps) => {
