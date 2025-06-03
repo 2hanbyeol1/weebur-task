@@ -10,8 +10,11 @@ const config: Config = {
   collectCoverage: true,
   coverageDirectory: "coverage",
   coverageProvider: "v8",
-  testEnvironment: "jsdom",
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  testEnvironment: "jest-fixed-jsdom",
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts", "<rootDir>/setupTests.ts"],
+  testEnvironmentOptions: {
+    customExportConditions: [""],
+  },
   clearMocks: true,
 };
 

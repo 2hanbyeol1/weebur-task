@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 
-import { createProduct } from "@/apis/product";
+import { addProduct } from "@/apis/product";
 import Button from "@/components/Button";
 import SelectBox from "@/components/Input/SelectBox";
 import Textarea from "@/components/Input/Textarea";
@@ -35,7 +35,7 @@ const ProductForm = () => {
 
   const onSubmit = async (data: CreateProductSchemaType) => {
     try {
-      await createProduct({ data });
+      await addProduct({ data });
       router.push(PRODUCT_LIST_PATH);
     } catch (e) {
       throw e;

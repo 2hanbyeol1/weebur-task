@@ -16,9 +16,10 @@ pnpm dev
 
 ## 기술 스택
 
-`next.js` `typescript` `tailwind css`
+`next.js` `typescript`
+`tailwind css`
+`jest` `react testing library` `msw`
 `react hook form` `zod`
-`jest` `react testing library`
 
 <br/>
 
@@ -66,7 +67,8 @@ pnpm dev
     - [x] 무한 스크롤
     - [x] title 2줄 / description 3줄 이후 ...
     - [ ] 익셉션 처리
-    - [ ] 테스트 코드
+    - [x] 테스트 코드
+    - [x] API 모킹
 
 ## 개발 계획
 

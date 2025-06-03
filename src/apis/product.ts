@@ -1,3 +1,4 @@
+import { ADD_PRODUCT_API_PATH, GET_PRODUCTS_API_PATH } from "@/constants/path";
 import { OffsetPaginationMetaType } from "@/types/pagination";
 import { ProductType } from "@/types/product";
 
@@ -13,7 +14,7 @@ interface GetProductsResponse extends OffsetPaginationMetaType {
 }
 
 export function getProducts({ limit, skip }: GetProductsParams) {
-  return api.get<GetProductsResponse>("/products", {
+  return api.get<GetProductsResponse>(GET_PRODUCTS_API_PATH, {
     params: { limit, skip },
   });
 }
@@ -23,6 +24,6 @@ type AddProductRequestBody = Pick<
   "title" | "description" | "price" | "discountPercentage" | "brand"
 >;
 
-export function createProduct({ data }: { data: AddProductRequestBody }) {
-  return api.post("/products/add", data);
+export function addProduct({ data }: { data: AddProductRequestBody }) {
+  return api.post(ADD_PRODUCT_API_PATH, data);
 }

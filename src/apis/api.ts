@@ -1,5 +1,7 @@
 import axios from "axios";
 
-const api = axios.create({ baseURL: "https://dummyjson.com" });
+import { BASE_URL_PATH } from "@/constants/path";
+
+const api = axios.create({ baseURL: BASE_URL_PATH });
 
 export default api;
