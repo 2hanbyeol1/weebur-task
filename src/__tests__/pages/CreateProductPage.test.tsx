@@ -62,16 +62,11 @@ describe("ProductForm", () => {
     expect(screen.getByRole("button", { name: "제출하기" })).toBeDisabled();
   });
 
-  it("할인율이 0보다 작거나 100보다 클 때 폼을 제출하면, 메시지가 뜨고 제출 버튼이 비활성화된다.", async () => {
+  it("할인율이 100보다 클 때 폼을 제출하면, 메시지가 뜨고 제출 버튼이 비활성화된다.", async () => {
     render(<ProductForm />);
     const discountInput = screen.getByLabelText("할인율");
     const submitButton = screen.getByRole("button", { name: "제출하기" });
-    await userEvent.type(discountInput, "-1");
-    await userEvent.click(submitButton);
 
-    expect(screen.getByText("0%부터 입력할 수 있어요")).toBeInTheDocument();
-
-    await userEvent.clear(discountInput);
     await userEvent.type(discountInput, "101");
     await userEvent.click(submitButton);
 

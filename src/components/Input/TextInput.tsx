@@ -33,6 +33,11 @@ const TextInput = ({
             className,
           )}
           type={type}
+          onKeyDown={(e) => {
+            if (type === "number" && ["e", "E", "+", "-"].includes(e.key)) {
+              e.preventDefault();
+            }
+          }}
           {...props}
         />
         {unit && <span>{unit}</span>}

@@ -23,6 +23,12 @@ export function getRandomLayout() {
   return Math.random() < 0.5 ? ELayout.LIST : ELayout.GRID;
 }
 
+export function getDiscountPrice(price: number, discountPercentage: number) {
+  if (price <= 0) return 0;
+  if (discountPercentage <= 0) return price;
+  return price - (price * discountPercentage) / 100;
+}
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
