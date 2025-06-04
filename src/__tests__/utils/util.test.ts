@@ -1,5 +1,5 @@
 import { ELayout } from "@/types/mode";
-import { cn, getRandomLayout, isELayout } from "@/util/util";
+import { cn, getDiscountPrice, getRandomLayout, isELayout } from "@/util/util";
 
 describe("isELayout", () => {
   it("ELayout의 유효한 값을 넣으면 true를 반환한다", () => {
@@ -25,6 +25,29 @@ describe("getRandomLayout", () => {
   it("Math.random이 0.7이면 GRID를 반환한다", () => {
     Math.random = jest.fn(() => 0.7);
     expect(getRandomLayout()).toBe(ELayout.GRID);
+  });
+});
+
+describe("getDiscountPrice", () => {
+  it("정상 할인 계산", () => {
+    expect(getDiscountPrice(100, 20)).toBe(80);
+    expect(getDiscountPrice(250.5, 15)).toBeCloseTo(212.925, 3);
+  });
+
+  it("할인율이 0%일 경우 원래 가격 반환", () => {
+    expect(getDiscountPrice(199.99, 0)).toBe(199.99);
+  });
+
+  it("가격이 음수일 경우 에러 발생", () => {
+    expect(() => getDiscountPrice(-100, 10)).toThrow("가격은 양수여야 합니다");
+  });
+
+  it("할인율이 음수일 경우 에러 발생", () => {
+    expect(() => getDiscountPrice(100, -5)).toThrow("할인율은 양수여야 합니다");
+  });
+
+  it("할인율이 100%일 경우 가격은 0", () => {
+    expect(getDiscountPrice(300, 100)).toBe(0);
   });
 });
 
