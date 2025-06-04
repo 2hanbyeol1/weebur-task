@@ -38,15 +38,11 @@ const ProductForm = () => {
   const router = useRouter();
 
   const onSubmit = async (data: CreateProductSchemaType) => {
-    try {
-      setSubmitting(true);
-      await addProduct({ data });
-      setSubmitting(false);
-      add("상품이 추가됐어요");
-      router.push(PRODUCT_LIST_PATH);
-    } catch (e) {
-      throw e;
-    }
+    setSubmitting(true);
+    await addProduct({ data });
+    setSubmitting(false);
+    add("상품이 추가됐어요");
+    router.push(PRODUCT_LIST_PATH);
   };
 
   const watchedPrice = useWatch({ name: "price", control });
@@ -88,7 +84,7 @@ const ProductForm = () => {
         title="브랜드"
         options={["Apple", "Samsung", "Weebur"]}
       />
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-6">
         <TextInput
           {...registerWith<CreateProductSchemaType>({
             name: "price",

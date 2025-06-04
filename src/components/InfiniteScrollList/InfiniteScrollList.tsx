@@ -18,14 +18,19 @@ const InfiniteScrollList = <T,>({
   const [data, setData] = useState<T[]>([]);
   const [isLoading, setLoading] = useState(true);
   const [isLastPage, setLastPage] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     (async () => {
-      setLoading(true);
-      const { newData, isLastPage } = await fetchFn(page);
-      setData((prev) => [...prev, ...newData]);
-      setLastPage(isLastPage);
-      setLoading(false);
+      try {
+        setLoading(true);
+        const { newData, isLastPage } = await fetchFn(page);
+        setData((prev) => [...prev, ...newData]);
+        setLastPage(isLastPage);
+        setLoading(false);
+      } catch (e) {
+        setError(e as Error);
+      }
     })();
   }, [fetchFn, page]);
 
@@ -37,6 +42,8 @@ const InfiniteScrollList = <T,>({
     onIntersect,
     rootMargin: "1000px",
   });
+
+  if (error) throw error;
 
   return (
     <>
