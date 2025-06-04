@@ -1,6 +1,6 @@
 ## 실행 방법
 
-### 1. 로컬에서 실행
+#### 1. 로컬에서 실행
 
 ```bash
 pnpm dev
@@ -8,9 +8,10 @@ pnpm dev
 
 [http://localhost:3000](http://localhost:3000)
 
-### 2. 링크
+#### 2. 링크
 
-[아직 배포 안됨!]()
+[상품 목록 확인하기](https://weebur-task.vercel.app/products)
+[상품 등록하기](https://weebur-task.vercel.app/products/new)
 
 <br/>
 
@@ -68,6 +69,8 @@ pnpm dev
 - [x] 예외 처리
 - [x] 테스트 코드
 - [x] API 모킹
+
+<br/>
 
 ## 개발 계획
 

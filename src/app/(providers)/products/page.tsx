@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import ScrollTopButton from "@/components/Button/ScrollTopButton";
 import { CREATE_PRODUCT_PATH } from "@/constants/path";
 
 import ProductList from "./_components/ProductList";
@@ -13,6 +14,7 @@ const ProductListPage = async () => {
         추가하기
       </Button>
       <ProductList defaultLayoutMode={viewMode} />
+      <ScrollTopButton />
     </div>
   );
 };
