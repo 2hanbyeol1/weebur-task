@@ -1,10 +1,3 @@
-import {
-  FieldErrors,
-  FieldValues,
-  Path,
-  UseFormRegister,
-  UseFormTrigger,
-} from "react-hook-form";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -49,35 +42,4 @@ export function getDiscountPrice(price: number, discountPercentage: number) {
  */
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
-}
-
-/**
- * react-hook-form의 register 함수를 확장하여 onBlur/onChange 시 유효성 검사를 수행합니다.
- * 또한 해당 필드의 오류 상태를 함께 반환합니다.
- * @template T react-hook-form의 FieldValues 타입
- * @param {Object} params 등록에 필요한 객체
- * @param {Path<T>} params.name 필드 이름
- * @param {UseFormRegister<T>} params.register useForm에서 전달된 register 함수
- * @param {UseFormTrigger<T>} params.trigger 유효성 검사 트리거 함수
- * @param {FieldErrors<T>} params.errors 현재 유효성 검사 오류 객체
- * @returns register 속성과 error 속성을 포함한 객체
- */
-export function registerWith<T extends FieldValues>({
-  name,
-  register,
-  trigger,
-  errors,
-}: {
-  name: Path<T>;
-  register: UseFormRegister<T>;
-  trigger: UseFormTrigger<T>;
-  errors: FieldErrors<T>;
-}) {
-  return {
-    ...register(name, {
-      onBlur: () => trigger(name),
-      onChange: () => trigger(name),
-    }),
-    error: errors[name],
-  };
 }

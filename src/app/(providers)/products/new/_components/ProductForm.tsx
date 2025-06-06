@@ -12,7 +12,6 @@ import TextInput from "@/components/Input/TextInput";
 import { PRODUCT_LIST_PATH } from "@/constants/path";
 import { useToast } from "@/context/toast";
 import { createProductSchema } from "@/lib/zod/validation";
-import { registerWith } from "@/util/util";
 
 import TotalPrice from "./TotalPrice";
 
@@ -25,11 +24,11 @@ const ProductForm = () => {
   const {
     register,
     control,
-    trigger,
     handleSubmit,
     formState: { errors },
   } = useForm<CreateProductSchemaType>({
     resolver: zodResolver(createProductSchema),
+    mode: "onChange",
     defaultValues: {
       brand: "Apple",
     },
@@ -54,44 +53,28 @@ const ProductForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
       <TextInput
-        {...registerWith<CreateProductSchemaType>({
-          name: "title",
-          register,
-          trigger,
-          errors,
-        })}
+        {...register("title")}
+        error={errors["title"]}
         title="상품명"
         maxLength={15}
         required
         autoFocus
       />
       <Textarea
-        {...registerWith<CreateProductSchemaType>({
-          name: "description",
-          register,
-          trigger,
-          errors,
-        })}
+        {...register("description")}
+        error={errors["description"]}
         title="상품 설명"
       />
       <SelectBox
-        {...registerWith<CreateProductSchemaType>({
-          name: "brand",
-          register,
-          trigger,
-          errors,
-        })}
+        {...register("brand")}
+        error={errors["brand"]}
         title="브랜드"
         options={["Apple", "Samsung", "Weebur"]}
       />
       <div className="grid grid-cols-2 gap-6">
         <TextInput
-          {...registerWith<CreateProductSchemaType>({
-            name: "price",
-            register,
-            trigger,
-            errors,
-          })}
+          {...register("price")}
+          error={errors["price"]}
           title="가격"
           type="number"
           unit="원"
@@ -99,12 +82,8 @@ const ProductForm = () => {
           required
         />
         <TextInput
-          {...registerWith<CreateProductSchemaType>({
-            name: "discountPercentage",
-            register,
-            trigger,
-            errors,
-          })}
+          {...register("discountPercentage")}
+          error={errors["discountPercentage"]}
           title="할인율"
           type="number"
           unit="%"
